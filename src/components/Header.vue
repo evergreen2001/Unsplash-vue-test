@@ -2,20 +2,53 @@
   <section class="header">
     <div class="search__container">
       <i class="fa fa-search search__icon"></i>
-      <input type="search" placeholder="Search for photo" />
+      <input
+        type="search"
+        placeholder="Search for photo"
+        v-model="inputValue"
+      />
     </div>
+
+     
+     <PhotoGrid :africaImages="africaImages"/>
   </section>
 </template>
 
 <script>
+import PhotoGrid from './PhotoGrid'
+import axios from "axios";
 export default {
   name: "Header",
-  created() {},
+  created() {
+    //making a GET request to get 8 latest "African photos"
+    axios
+      .get("https://api.unsplash.com/search/photos", {
+        params: {
+          query: this.query,
+          client_id: "6BguTKo0SLW85C-gWpQsP5WGxMvtSQfDJBXZRLi0LTE",
+          order_by: "latest",
+          per_page:"8"
+
+        },
+      })
+      .then((res) => {
+        console.log(res.data.results);
+        this.africaImages = res.data.results
+      });
+  },
   data() {
-    return {};
+    return {
+      inputValue: "",
+      africaImages: [],
+      page: 1,
+      query:'Africa'
+    };
   },
   props: {},
   methods: {},
+  components:{
+    PhotoGrid
+  }
 };
 </script>
 
@@ -23,8 +56,7 @@ export default {
 .header {
   background: var(--backdrop-color);
   height: var(--backdrop-height);
-  padding-top: 80px ;
- 
+  padding-top: 80px;
 }
 
 .search__container {
@@ -34,7 +66,7 @@ export default {
 
   align-items: center;
   margin: auto;
-  /* padding: 10px 0; */
+  padding: 5px 0;
 
   border-radius: 10px;
   background-color: #fff;
@@ -47,7 +79,7 @@ export default {
   background: #fff;
   font-family: Poppins;
   height: 20px;
-  padding-left: 70px;
+  padding-left: 10px;
   border-radius: 10px;
   border: none;
   font-size: 20px;
@@ -61,6 +93,7 @@ export default {
   color: var(--navy-blue);
   background-color: #fff;
   border-radius: 10px;
-  padding: 20px;
+  padding: 20px 40px;
+  font-weight: 100;
 }
 </style>
