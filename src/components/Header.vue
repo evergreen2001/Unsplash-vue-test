@@ -5,17 +5,17 @@
       <input
         type="search"
         placeholder="Search for photo"
-        v-model="inputValue"
+        v-model="searchQuery"
+        @keyup.enter="handleSearch"
       />
     </div>
 
-     
-     <PhotoGrid :africaImages="africaImages"/>
+    <PhotoGrid :images="images" />
   </section>
 </template>
 
 <script>
-import PhotoGrid from './PhotoGrid'
+import PhotoGrid from "./PhotoGrid";
 import axios from "axios";
 export default {
   name: "Header",
@@ -27,28 +27,51 @@ export default {
           query: this.query,
           client_id: "6BguTKo0SLW85C-gWpQsP5WGxMvtSQfDJBXZRLi0LTE",
           order_by: "latest",
-          per_page:"8"
-
+          page: 1,
         },
       })
       .then((res) => {
         console.log(res.data.results);
-        this.africaImages = res.data.results
+        this.images = res.data.results;
       });
   },
   data() {
     return {
       inputValue: "",
-      africaImages: [],
+      images: [],
       page: 1,
-      query:'Africa'
+      query: "Africa",
+      searchQuery: [],
     };
   },
   props: {},
-  methods: {},
-  components:{
-    PhotoGrid
-  }
+  methods: {
+    handleSearch() {
+      this.searching = true;
+      this.newest = false;
+      console.log("Search started");
+      axios
+        .get("https://api.unsplash.com/search/photos", {
+          params: {
+            query: this.searchQuery,
+            client_id: "6BguTKo0SLW85C-gWpQsP5WGxMvtSQfDJBXZRLi0LTE",
+            order_by: "latest",
+            per_page: "8",
+            page: 1,
+          },
+        })
+        .then((response) => {
+          this.images = response.data.results;
+          console.log(response);
+        })
+        .catch((e) => {
+          this.erorrs.push(e);
+        });
+    },
+  },
+  components: {
+    PhotoGrid,
+  },
 };
 </script>
 
