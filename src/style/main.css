@@ -14,7 +14,9 @@
   --bold: 700;
   --regular: 550;
   --normal: 400;
-  /* Font Weights */
-  --font: "Poppins";
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
 }
 /*# sourceMappingURL=main.css.map */

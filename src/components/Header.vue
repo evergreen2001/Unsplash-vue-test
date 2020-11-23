@@ -1,6 +1,9 @@
 <template>
   <section class="header">
-    <div class="search__container">
+    <div class="search__result__text" v-if="searching">
+      <h1>Search result for <span>"{{ searchQuery }}"</span></h1>
+    </div>
+    <div class="search__container" v-else>
       <i class="fa fa-search search__icon"></i>
       <input
         type="search"
@@ -42,6 +45,7 @@ export default {
       page: 1,
       query: "Africa",
       searchQuery: [],
+      searching: false,
     };
   },
   props: {},
@@ -56,7 +60,6 @@ export default {
             query: this.searchQuery,
             client_id: "6BguTKo0SLW85C-gWpQsP5WGxMvtSQfDJBXZRLi0LTE",
             order_by: "latest",
-            per_page: "8",
             page: 1,
           },
         })
@@ -119,4 +122,33 @@ export default {
   padding: 20px 40px;
   font-weight: 100;
 }
+
+.search__result__text {
+  padding: 5px 0;
+  margin-top: 90px;
+
+  display: flex;
+
+  align-items: center;
+  margin: auto;
+  padding: 5px 0;
+
+  border-radius: 10px;
+
+  width: 80%;
+}
+
+.search__result__text > h1 {
+  font-size: 40px;
+  color: var(--dark-blue);
+  font-weight: 900;
+}
+
+.search__result__text >h1 > span {
+  font-size: 40px;
+  color: var(--light-blue);
+  font-weight: 900;
+}
+
+
 </style>

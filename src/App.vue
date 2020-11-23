@@ -6,7 +6,7 @@
 
 <script>
 import Header from "./components/Header.vue";
-// import d from './style/'
+
 
 export default {
   name: "App",

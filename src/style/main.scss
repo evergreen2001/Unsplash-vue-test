@@ -2,6 +2,7 @@
 
     margin: 0;
     padding: 0;
+
 }
 
 :root {
@@ -17,7 +18,11 @@
     --regular: 550;
     --normal: 400;
   
-    /* Font Weights */
-    --font: "Poppins";
+  
+    
   }
   
+
+  body{
+    font-family: 'Roboto', sans-serif;
+  }

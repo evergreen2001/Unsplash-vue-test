@@ -25,43 +25,37 @@ export default {
   props: {
     images: Array,
   },
-  methods: {
-
-    
-  },
+  methods: {},
 };
 </script>
 
 <style scoped>
 .photogrid {
-  width: 100%;
+  width: 77%;
   margin: auto;
 }
 .photo__row {
-  /* max-width: 1200px; */
+  max-width: 1200px;
   margin: 30px auto;
-  padding: 0 20px;
- position: relative;
-  display: grid;
-  /* Define Auto Row size */
+  padding: 0px 20px;
 
-  /*Define our columns */
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-gap: 0.7em;
+  columns:3;
+  column-gap:60px;
+ 
+
+  
 }
 
 .photo__column {
-  /* height: 100%; */
-  margin: 30px;
-  position: relative;
+ 
+ margin: 0 0 20px 0;
+ width:100%;
+ 
 }
 .photo__column > img {
   border-radius: 10px;
-
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: auto;
+   width: 100%;
+  
   z-index: 1;
   transition-duration: 0.3s;
   transition-property: all;
@@ -69,14 +63,13 @@ export default {
   transform: translateZ(0);
 }
 
-.author__info  {
+.author__info {
   color: #fff;
   font-weight: 800;
 
   position: absolute;
   /* top: 30px; */
 
-  
   bottom: 10%;
   left: 16px;
 }
