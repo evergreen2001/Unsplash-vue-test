@@ -1,7 +1,9 @@
 <template>
   <section class="header">
     <div class="search__result__text" v-if="searching">
-      <h1>Search result for <span>"{{ searchQuery }}"</span></h1>
+      <h1>
+        Search result for <span>"{{ searchQuery }}"</span>
+      </h1>
     </div>
     <div class="search__container" v-else>
       <i class="fa fa-search search__icon"></i>
@@ -13,7 +15,7 @@
       />
     </div>
 
-    <PhotoGrid :images="images" />
+    <PhotoGrid :images="images" :isLoading='isLoading' />
   </section>
 </template>
 
@@ -24,6 +26,7 @@ export default {
   name: "Header",
   created() {
     //making a GET request to get 8 latest "African photos"
+    this.isLoading = true;
     axios
       .get("https://api.unsplash.com/search/photos", {
         params: {
@@ -36,7 +39,9 @@ export default {
       .then((res) => {
         console.log(res.data.results);
         this.images = res.data.results;
-      });
+      }).finally(()=>{
+          this.isLoading = false;
+        });
   },
   data() {
     return {
@@ -46,6 +51,9 @@ export default {
       query: "Africa",
       searchQuery: [],
       searching: false,
+      isLoading: false
+
+
     };
   },
   props: {},
@@ -53,6 +61,7 @@ export default {
     handleSearch() {
       this.searching = true;
       this.newest = false;
+      this.isLoading  = true;
       console.log("Search started");
       axios
         .get("https://api.unsplash.com/search/photos", {
@@ -69,6 +78,8 @@ export default {
         })
         .catch((e) => {
           this.erorrs.push(e);
+        }).finally(()=>{
+          this.isLoading = false;
         });
     },
   },
@@ -144,11 +155,39 @@ export default {
   font-weight: 900;
 }
 
-.search__result__text >h1 > span {
+.search__result__text > h1 > span {
   font-size: 40px;
   color: var(--light-blue);
   font-weight: 900;
 }
 
 
+.profile-card .profile-image__img {
+    width: 10%;
+    padding-top: 10%;
+    border-radius: 50%;
+    background-color: #ddd;
+  }
+
+  .profile-info span {
+    min-width: 100px;
+    height: 16px;
+    display: inline-block;
+    background-color: #ddd;
+  }
+
+  .profile-info h3 {
+    content: ' ';
+    width: 250px;
+    height: 24px;
+    background-color: #ddd;
+    margin: 10px 0;
+  }
+
+  .profile-info p {
+    width: 80%;
+    background-color: #ddd;
+    height: 16px;
+    line-height: 140%;
+  }
 </style>
