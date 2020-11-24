@@ -1,6 +1,6 @@
 <template>
   <div class="photogrid">
-    <div class="loading">
+    <div class="loading" v-if="isLoading">
       <div class="photo__row__loader">
         <div class="photo__column__loader">
           <div class="author__info__loader">
@@ -9,20 +9,22 @@
           </div>
         </div>
 
-<div class="photo__row__loader">
+
         <div class="photo__column__loader">
           <div class="author__info__loader">
             <p></p>
             <p class="author__info__location__loader"></p>
           </div>
         </div>
-        <div class="photo__row__loader">
+
         <div class="photo__column__loader">
           <div class="author__info__loader">
             <p></p>
             <p class="author__info__location__loader"></p>
           </div>
         </div>
+
+        
 
         
       </div>
@@ -117,26 +119,6 @@ export default {
   font-size:small;
 }
 
-/* media queries */
-
-@media (max-width: 1200px) {
-  .photo__row {
-    columns: 2;
-  }
-}
-
-@media (max-width: 768px) {
-  .photo__row {
-    columns: 2;
-  }
-}
-
-@media (max-width: 480px) {
-  .photo__row {
-    columns: 1;
-  }
-}
-
 /* Skeleton loader  */
 .photo__row__loader {
   margin: 30px auto;
@@ -148,9 +130,7 @@ export default {
 
 .photo__column__loader {
   margin: 0 0 20px 0;
-  /* height: 800px; */
-  /* background-color:linear-gradient(-45deg, #DDDDDD,, #DDDDDD, #F0F0F0);
-  */
+  
   height: 400px;
   background: #f0f0f0;
   width: 100%;
@@ -199,4 +179,42 @@ export default {
     50% { background-color: #d0d0d0; }
     100% { background-color: #ddd; }
   }
+/* media queries */
+
+@media (max-width: 1200px) {
+  .photo__row {
+    columns: 2;
+  }
+
+
+  .photo__row__loader{
+    columns: 1;
+
+  }
+}
+
+@media (max-width: 768px) {
+  .photo__row {
+    columns: 1;
+  }
+
+  .photo__row__loader{
+    columns: ;
+
+  }
+}
+
+@media (max-width: 480px) {
+  .photo__row {
+    columns: 1;
+  }
+
+.photo__row__loader{
+    columns: 1;
+
+  }
+
+}
+
+
 </style>

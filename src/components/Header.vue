@@ -1,10 +1,24 @@
 <template>
   <section class="header">
+
+    <div class="error search__result__text" v-if="Error">
+      <h1> 
+
+        Search result not found try again
+        </h1>
+
+
+    </div>
     <div class="search__result__text" v-if="searching">
       <h1>
         Search result for <span>"{{ searchQuery }}"</span>
+
+        
       </h1>
+
     </div>
+
+  
     <div class="search__container" v-else>
       <i class="fa fa-search search__icon"></i>
       <input
@@ -51,7 +65,8 @@ export default {
       query: "Africa",
       searchQuery: [],
       searching: false,
-      isLoading: false
+      isLoading: false,
+      Error:false
 
 
     };
@@ -62,6 +77,9 @@ export default {
       this.searching = true;
       this.newest = false;
       this.isLoading  = true;
+          this.Error = false
+
+      this.images = ''
       console.log("Search started");
       axios
         .get("https://api.unsplash.com/search/photos", {
@@ -75,11 +93,26 @@ export default {
         .then((response) => {
           this.images = response.data.results;
           console.log(response);
+
+
+          
         })
         .catch((e) => {
           this.erorrs.push(e);
+
+
+          
         }).finally(()=>{
           this.isLoading = false;
+
+          if(this.images == ''){
+
+
+            this.Error = true ; 
+            this.searching = false;
+            this.searchQuery = ''
+
+          }
         });
     },
   },
