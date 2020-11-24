@@ -1,6 +1,6 @@
 <template>
   <div class="photogrid">
-    <div class="loading" >
+    <div class="loading" v-if="isLoading">
       <div class="photo__row__loader">
         <div class="photo__column__loader">
           <div class="author__info">
@@ -52,8 +52,10 @@
         <img :src="item.urls.regular" />
 
         <div class="author__info">
-          <p>username</p>
-          <p>location</p>
+          <p>{{item.user.name}}</p>
+          <p class="author__location">{{item.user.location}}</p>
+
+       
         </div>
       </div>
     </div>
@@ -94,6 +96,7 @@ export default {
 .photo__column {
   margin: 0 0 20px 0;
   width: 100%;
+  position: relative;
 }
 .photo__column > img {
   border-radius: 10px;
@@ -107,13 +110,21 @@ export default {
 }
 
 .author__info {
-  color: #fff;
-  font-weight: 800;
-
   position: absolute;
+  left: 15px;
+  right: 0;
+  top: 40%;
+  bottom: 27px;
+ 
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content:flex-end;
+  text-transform: capitalize;
+} 
 
-  bottom: 10%;
-  left: 16px;
+.author__info >.author__location{
+  font-size:small;
 }
 
 /* media queries */
