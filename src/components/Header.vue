@@ -1,24 +1,16 @@
 <template>
   <section class="header">
-
     <div class="error search__result__text" v-if="Error">
-      <h1> 
-
+      <h1>
         Search result not found try again
-        </h1>
-
-
+      </h1>
     </div>
     <div class="search__result__text" v-if="searching">
       <h1>
         Search result for <span>"{{ searchQuery }}"</span>
-
-        
       </h1>
-
     </div>
 
-  
     <div class="search__container" v-else>
       <i class="fa fa-search search__icon"></i>
       <input
@@ -29,12 +21,13 @@
       />
     </div>
 
-    <PhotoGrid :images="images" :isLoading='isLoading' />
+    <PhotoGrid :images="images" :isLoading="isLoading" />
   </section>
 </template>
 
 <script>
 import PhotoGrid from "./PhotoGrid";
+
 import axios from "axios";
 export default {
   name: "Header",
@@ -46,16 +39,21 @@ export default {
         params: {
           query: this.query,
           client_id: "6BguTKo0SLW85C-gWpQsP5WGxMvtSQfDJBXZRLi0LTE",
-          
+
           page: 1,
         },
       })
       .then((res) => {
         console.log(res.data.results);
         this.images = res.data.results;
-      }).finally(()=>{
-          this.isLoading = false;
-        });
+
+        // this.location=res.data.results.user.location
+
+        // console.log(res.data.results.user.location)
+      })
+      .finally(() => {
+        this.isLoading = false;
+      });
   },
   data() {
     return {
@@ -66,9 +64,7 @@ export default {
       searchQuery: [],
       searching: false,
       isLoading: false,
-      Error:false
-
-
+      Error: false,
     };
   },
   props: {},
@@ -76,42 +72,34 @@ export default {
     handleSearch() {
       this.searching = true;
       this.newest = false;
-      this.isLoading  = true;
-          this.Error = false
+      this.isLoading = true;
+      this.Error = false;
 
-      this.images = ''
+      this.images = "";
       console.log("Search started");
       axios
         .get("https://api.unsplash.com/search/photos", {
           params: {
             query: this.searchQuery,
             client_id: "6BguTKo0SLW85C-gWpQsP5WGxMvtSQfDJBXZRLi0LTE",
-           
+
             page: 1,
           },
         })
         .then((response) => {
           this.images = response.data.results;
           console.log(response);
-
-
-          
         })
         .catch((e) => {
           this.erorrs.push(e);
-
-
-          
-        }).finally(()=>{
+        })
+        .finally(() => {
           this.isLoading = false;
 
-          if(this.images == ''){
-
-
-            this.Error = true ; 
+          if (this.images == "") {
+            this.Error = true;
             this.searching = false;
-            this.searchQuery = ''
-
+            this.searchQuery = "";
           }
         });
     },
@@ -147,7 +135,7 @@ export default {
   border: none;
   outline-width: none;
   background: #fff;
-  font-family: Poppins;
+ 
   height: 20px;
   padding-left: 10px;
   border-radius: 10px;
@@ -158,6 +146,8 @@ export default {
   color: var(--navy-blue);
   outline: none;
 }
+
+
 .search__icon {
   font-size: 20px;
   color: var(--navy-blue);
@@ -193,6 +183,4 @@ export default {
   color: var(--light-blue);
   font-weight: 900;
 }
-
-
 </style>
